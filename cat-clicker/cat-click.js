@@ -17,12 +17,25 @@
 		var link = document.createElement("a");
 		link.textContent = cat.name;
 		link.href = "#" + cat.id;
-		link.id = cat.id;
+
+    	menuItem.addEventListener('click', (function(cat) {
+        	return function() {
+        			var containers = document.querySelectorAll("div.cat-container");
+					for (var i=0; i < containers.length;i++) {
+						containers[i].style.display = "none";
+					}
+            	document.querySelector("div#" + cat.id).style.display = "block";
+        	};
+    	})(cat));
+
+		link.className = "toggleCat";
 		menuItem.appendChild(link);
 		catMenu.appendChild(menuItem);
 
 		// Build main content
 		var catDiv = document.createElement("div");
+		catDiv.id = cat.id;
+		catDiv.className = "cat-container";
 		cats.appendChild(catDiv);
 
 		var catImg = document.createElement("img");
@@ -45,6 +58,7 @@
 			cat.tally++;
 			document.getElementById( cat.id + "-tally" ).innerHTML = cat.tally + " likes";
 		}, false );
+
 	};
 
 	var names = ['Garfield', 'Fritz', 'Boston', 'Phoenix', 'Lizzy', "Marmaduke"];
@@ -54,5 +68,8 @@
 		addCat( cat );
 
 	}
-
+	var containers = document.querySelectorAll("div.cat-container");
+	for (var i=0; i < containers.length;i++) {
+		containers[i].style.display = "none";
+	}
 })();
